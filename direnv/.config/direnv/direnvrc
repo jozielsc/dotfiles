@@ -1,12 +1,18 @@
-use_poetry() {
-    local venv=$(poetry env info -p)
-    if [[ -d "$venv" ]]; then
-        layout python "$venv/bin/python"
-    else
-        echo "Poetry virtualenv not found. Run 'poetry install' first."
-    fi
+layout_poetry() {
+  if ! command -v poetry >/dev/null; then
+    echo "poetry not found"
+    return 1
+  fi
+
+  local venv
+  venv="$(poetry env info -p 2>/dev/null)"
+
+  if [ -z "$venv" ]; then
+    echo "No poetry virtualenv found"
+    return 1
+  fi
+
+  export VIRTUAL_ENV="$venv"
+  PATH_add "$VIRTUAL_ENV/bin"
 }
 
-layout_poetry() {
-    use_poetry
-}

@@ -77,10 +77,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-completions 
-	colored-man-pages command-not-found history-substring-search alias-finder
-	asdf direnv poetry
-)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-completions colored-man-pages command-not-found history-substring-search alias-finder direnv poetry)
 
 source $ZSH/oh-my-zsh.sh
 source <(fzf --zsh)
@@ -117,8 +114,11 @@ alias lst="lsd --tree"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Created by `pipx` on 2025-06-07 18:51:42
+#export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+
+if [[ -n "$SSH_CONNECTION" && -z "$TMUX" ]]; then
+    tmux attach || tmux new 
+fi
+
+# Created by `pipx` on 2025-12-15 23:18:12
 export PATH="$PATH:/home/joziel/.local/bin"
-
-export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
-

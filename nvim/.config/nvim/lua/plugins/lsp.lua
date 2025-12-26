@@ -1,64 +1,97 @@
 return {
-  "neovim/nvim-lspconfig",
-  dependencies = { "hrsh7th/cmp-nvim-lsp" },
-  config = function()
-    local lspconfig = require("lspconfig")
-    local cmp_nvim_lsp = require("cmp_nvim_lsp")
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      inlay_hints = { enabled = true },
+      servers = {
+        cssls = {},
 
-    local capabilities = vim.tbl_deep_extend(
-      "force",
-      {},
-      vim.lsp.protocol.make_client_capabilities(),
-      cmp_nvim_lsp.default_capabilities()
-    )
+        tailwindcss = {
+          root_dir = function(...)
+            return require("lspconfig.util").root_pattern(".git")(...)
+          end,
+        },
 
-    lspconfig.pyright.setup({
-        
-        on_attach = function(client, bufnr)
-            -- Desabilita formatacao e linting, apenas type checking
-            client.server_capabilities.documentFormattingProvider = false
-            client.server_capabilities.documentRangeFormattingProvider = false
-        end,
-        
-    })
+        tsserver = {
+          root_dir = function(...)
+            return require("lspconfig.util").root_pattern(".git")(...)
+          end,
+          single_file_support = false,
+          settings = {
+            typescript = {
+              inlayHints = {
+                includeInlayParameterNameHints = "literal",
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = false,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayEnumMemberValueHints = true,
+              },
+            },
+            javascript = {
+              inlayHints = {
+                includeInlayParameterNameHints = "all",
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = false,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayEnumMemberValueHints = true,
+              },
+            },
+          },
+        },
 
-    -- Ruff LSP (substitui ruff_lsp)
+        html = {},
 
-    lspconfig.ruff.setup({
-      capabilities = capabilities,
-      on_attach = function(client, bufnr) 
-        if client.server_capabilities.documentFormattingProvider then
-            client.server_capabilities.hoverProvider = false
+        basedpyright = {
+          settings = {
+            basedpyright = {
+              analysis = {
+                diagnosticMode = "openFilesOnly",
+                typeCheckingMode = "basic",
+                useLibraryCodeForTypes = true,
 
-         vim.api.nvim_create_user_command("RuffFix", function()
-             vim.lsp.buf.code_action({
-                context = {only = {"source.fixAll.ruff"}},
-                apply = true,
-            })
-         end,{desc="Executar Ruff fix"})
+                diagnosticSeverityOverrides = {
+                  -- DEIXA TUDO DE UNUSED PARA O RUFF
+                  reportUnusedImport = "none",
+                  reportUnusedVariable = "none",
+                  reportUnusedFunction = "none",
+                  reportUnusedExpression = "none",
+                },
+              },
+            },
+          },
+        },
 
-         vim.api.nvim_create_user_command("RuffSort", function()
-             vim.lsp.buf.code_action({
-                context = {only = {"source.organizeImports.ruff"}},
-                apply = true,
-            })
-         end,{desc="Organiza imports"})
+        ruff = {
+          init_options = {
+            settings = {
+              fixAll = true,
+              organizeImports = true,
+            },
+          },
+        },
 
-         vim.api.nvim_create_autocmd("BufWritePre", {
-            group = vim.api.nvim_create_augroup("RuffFormatOnSave", { clear = true }),
-            buffer = bufnr,
-            callback = function()
-              vim.lsp.buf.format({ bufnr = bufnr })
-           end,
-          })
-        end
-     end,
-      init_options = {
-        settings = {
-           args = {}
-       },
-     },
-   })
-   end
+        lua_ls = {
+          cmd = { "lua-language-server" },
+          settings = {
+            Lua = {
+              diagnostics = {
+                globals = { "vim" },
+              },
+              workspace = {
+                checkThirdParty = false,
+              },
+              telemetry = { enable = false },
+            },
+          },
+          format = {
+            enable = false,
+          },
+        },
+      },
+    },
+  },
 }
-
