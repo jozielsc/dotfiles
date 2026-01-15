@@ -77,10 +77,29 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-completions colored-man-pages command-not-found history-substring-search alias-finder direnv poetry)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-completions colored-man-pages command-not-found history-substring-search alias-finder)
 
 source $ZSH/oh-my-zsh.sh
-source <(fzf --zsh)
+
+# direnv
+if command -v direnv >/dev/null 2>&1; then
+  eval "$(direnv hook zsh)"
+fi
+
+# poetry
+#if command -v poetry >/dev/null 2>&1; then
+#  poetry completions zsh >| ~/.zfunc/_poetry 2>/dev/null
+#  fpath+=(~/.zfunc)
+#  autoload -Uz compinit && compinit
+#fi
+
+# fzf
+if command -v fzf >/dev/null 2>&1; then
+  source <(fzf --zsh)
+fi
+
+
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -121,4 +140,4 @@ if [[ -n "$SSH_CONNECTION" && -z "$TMUX" ]]; then
 fi
 
 # Created by `pipx` on 2025-12-15 23:18:12
-export PATH="$PATH:/home/joziel/.local/bin"
+export PATH="$HOME/.local/bin:$PATH"
