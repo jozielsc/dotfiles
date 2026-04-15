@@ -2,7 +2,8 @@
   "extras": [
     "lazyvim.plugins.extras.ai.copilot",
     "lazyvim.plugins.extras.ai.copilot-chat",
-    "lazyvim.plugins.extras.editor.refactoring"
+    "lazyvim.plugins.extras.editor.refactoring",
+    "lazyvim.plugins.extras.lang.ansible"
   ],
   "install_version": 8,
   "news": {

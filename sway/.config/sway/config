@@ -26,6 +26,7 @@ set $term foot
 #set $menu wmenu-run
 set $menu dmenu_run
 set $browser qutebrowser-wayland
+set $browser-firefox firefox
 
 ### Output configuration
 #
@@ -57,6 +58,11 @@ input * {
     xkb_layout us
     xkb_variant altgr-intl
 }
+
+input "type:pointer" {
+    left_handed enabled
+}
+
 # Example configuration:
 #
 #   input "2:14:SynPS/2_Synaptics_TouchPad" {
@@ -83,6 +89,7 @@ input * {
     bindsym $mod+d exec $menu
 
     bindsym $mod+Shift+b exec $browser
+    bindsym $mod+Shift+f exec $browser-firefox
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
