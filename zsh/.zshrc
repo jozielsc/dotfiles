@@ -91,6 +91,9 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+unset GIT_PAGER
+export LESS="-FRX -R"
+
 # direnv
 if command -v direnv >/dev/null 2>&1; then
   eval "$(direnv hook zsh)"
