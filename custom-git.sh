@@ -18,8 +18,8 @@ git config --global delta.file-style "bold yellow"
 git config --global delta.hunk-header-style "file line-number syntax"
 
 # Cores refinadas
-git config --global delta.plus-style "syntax #012800"
-git config --global delta.minus-style "syntax #340001"
+git config --global delta.plus-style "syntax #025824"
+git config --global delta.minus-style "syntax #740001"
 
 # Qualidade de diff
 git config --global delta.whitespace-error-style "22 reverse"
