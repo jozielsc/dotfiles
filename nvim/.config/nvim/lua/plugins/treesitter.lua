@@ -11,6 +11,10 @@ return {
       "vimdoc",
       "query",
 
+      -- rust
+      "rust",
+      "toml",
+
       -- python
       "python",
 
