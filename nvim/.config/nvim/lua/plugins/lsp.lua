@@ -75,16 +75,23 @@ return {
         },
 
         lua_ls = {
+          -- Força o uso do binário nativo do Void (instalado via xbps)
           cmd = { "lua-language-server" },
           settings = {
             Lua = {
               diagnostics = {
+                -- Reconhece a variável global `vim`
                 globals = { "vim" },
               },
               workspace = {
+                -- Suprime o prompt chato de ambiente de terceiros
                 checkThirdParty = false,
+                -- Faz o servidor ler a documentação e os tipos da API do Neovim
+                library = vim.api.nvim_get_runtime_file("", true),
               },
-              telemetry = { enable = false },
+              telemetry = {
+                enable = false,
+              },
             },
           },
           format = {

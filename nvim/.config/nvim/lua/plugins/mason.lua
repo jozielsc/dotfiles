@@ -6,11 +6,11 @@ return {
         -- LSPs
         "basedpyright",
         --        "lua-language-server",
-        "tailwindcss-language-server",
-        "typescript-language-server",
-        "css-lsp",
+        --"tailwindcss-language-server",
+        --"typescript-language-server",
+        --"css-lsp",
         "rust-analyzer",
-        "codelldb",
+        --"codelldb",
 
         -- Tools (format / lint)
         "ruff",
