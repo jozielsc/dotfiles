@@ -17,6 +17,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+
+
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -112,6 +114,13 @@ if command -v fzf >/dev/null 2>&1; then
 fi
 
 
+export XDG_CONFIG_HOME=~/.config
+export XDG_CONFIG_DIRS=~/.config/nvim:$XDG_CONFIG_DIRS
+export FZF_BASE=/usr/bin/fzf
+export FZF_DEFAULT_COMMAND='fd --hidden --exclude .git'
+export FZF_CTRL_T_COMMAND='fd --hidden'
+export FZF_ALT_C_COMMAND='fd --hidden'
+export EDITOR=nvim
 
 # User configuration
 
@@ -146,11 +155,11 @@ alias lst="lsd --tree"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh 
 
-#export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
-
 if [[ -n "$SSH_CONNECTION" && -z "$TMUX" ]]; then
     tmux attach || tmux new 
 fi
 
 # Created by `pipx` on 2025-12-15 23:18:12
 export PATH="$HOME/.local/bin:$PATH"
+
+source /home/joziel/.config/broot/launcher/bash/br
