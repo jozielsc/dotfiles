@@ -161,5 +161,5 @@ fi
 
 # Created by `pipx` on 2025-12-15 23:18:12
 export PATH="$HOME/.local/bin:$PATH"
-
+export PATH="$HOME/.local/npm/bin:$PATH"
 source /home/joziel/.config/broot/launcher/bash/br
