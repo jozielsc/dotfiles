@@ -25,8 +25,7 @@ set $term foot
 # Your preferred application launcher
 #set $menu wmenu-run
 set $menu dmenu_run
-set $browser qutebrowser-wayland
-set $browser-firefox firefox
+set $browser librewolf
 
 ### Output configuration
 #
