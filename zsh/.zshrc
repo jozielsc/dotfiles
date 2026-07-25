@@ -113,7 +113,7 @@ if command -v fzf >/dev/null 2>&1; then
   source <(fzf --zsh)
 fi
 
-
+export COLORTERM=truecolor
 export XDG_CONFIG_HOME=~/.config
 export XDG_CONFIG_DIRS=~/.config/nvim:$XDG_CONFIG_DIRS
 export FZF_BASE=/usr/bin/fzf
