@@ -80,6 +80,7 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
+  docker
   zsh-completions
   zsh-autosuggestions 
   zsh-syntax-highlighting 
@@ -101,11 +102,8 @@ if command -v direnv >/dev/null 2>&1; then
   eval "$(direnv hook zsh)"
 fi
 
-# poetry
-#if command -v poetry >/dev/null 2>&1; then
-#  poetry completions zsh >| ~/.zfunc/_poetry 2>/dev/null
-#  fpath+=(~/.zfunc)
-#  autoload -Uz compinit && compinit
+#if command -v docker &>/dev/null; then
+#    source <(docker completion zsh)
 #fi
 
 # fzf
@@ -150,13 +148,19 @@ export EDITOR=nvim
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias ls="lsd"
-alias lst="lsd --tree"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh 
 
 if [[ -n "$SSH_CONNECTION" && -z "$TMUX" ]]; then
     tmux attach || tmux new 
+fi
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+if [ -f ~/.bash_environment ]; then
+    . ~/.bash_environment
 fi
 
 # Created by `pipx` on 2025-12-15 23:18:12
