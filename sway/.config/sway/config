@@ -4,8 +4,6 @@
 #
 # Read `man 5 sway` for a complete reference.
 #
-#No titlebars
-#
 default_border pixel 1 
 #default_floating_border pixel 5
 exec ~/.config/sway/pipewire-start.sh
