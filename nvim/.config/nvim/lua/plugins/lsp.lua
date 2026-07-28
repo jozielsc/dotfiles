@@ -5,7 +5,8 @@ return {
       inlay_hints = { enabled = true },
       servers = {
         cssls = {},
-
+        -- Desativa o pyright para não conflitar com o basedpyright
+        pyright = { enabled = false },
         tailwindcss = {
           root_dir = function(...)
             return require("lspconfig.util").root_pattern(".git")(...)
