@@ -1,4 +1,1 @@
-export GITLAB_HOST="gitlab.mpto.mp.br"
-export GITLAB_GROUP="mpto"
-export IMGHUB_REPO="imghub.mpto.mp.br/mpto"
 
