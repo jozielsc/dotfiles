@@ -74,7 +74,7 @@ sudo apk add stow
 Recomenda-se clonar diretamente no seu `$HOME`:
 
 ```bash
-git clone https://github.com/jozielsc/dotfiles.git ~/.dotfiles
+git clone https://github.com/<seu-usuario>/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 ```
 
