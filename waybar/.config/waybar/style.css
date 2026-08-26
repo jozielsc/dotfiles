@@ -62,6 +62,7 @@ window#waybar {
 #custom-media,
 #idle_inhibitor,
 #pulseaudio,
+#backlight,
 #cpu,
 #memory,
 #temperature,
@@ -94,6 +95,10 @@ window#waybar {
 
 #pulseaudio {
   color: @cyan;
+}
+
+#backlight {
+  color: @yellow;
 }
 
 #cpu {

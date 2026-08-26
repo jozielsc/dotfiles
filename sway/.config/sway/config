@@ -5,6 +5,7 @@
 # Read `man 5 sway` for a complete reference.
 #
 default_border pixel 1 
+smart_borders on 
 #default_floating_border pixel 5
 exec ~/.config/sway/pipewire-start.sh
 #gaps inner 5
@@ -22,7 +23,8 @@ set $right l
 set $term foot
 # Your preferred application launcher
 #set $menu wmenu-run
-set $menu dmenu_run
+#set $menu dmenu_run
+set $menu wofi --show drun --prompt "Search..." --width 40% --height 40% --location center
 set $browser librewolf
 
 ### Output configuration
@@ -225,8 +227,10 @@ bindsym $mod+r mode "resize"
     bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
     bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
     # Special key to take a screenshot with grim
-    bindsym Print exec grim
-
+    bindsym Print exec grim ~/Images/$(date +%Y-%m-%d_%H%M%S).png
+    bindsym Shift+Print exec grim -g "$(slurp)" ~/Images/$(date +%Y-%m-%d_%H%M%S).png
+    bindsym $mod+Print exec grim -g "$(slurp)" - | wl-copy 
+    
 #
 # Status Bar:
 #
@@ -249,9 +253,9 @@ seat * {
     hide_cursor 3000
 }
 
-exec_always {
-    export GTK_THEME=Adwaita
-    export XCURSOR_THEME=Adwaita
-}
+#exec_always {
+#    export GTK_THEME=Adwaita
+#    export XCURSOR_THEME=Adwaita
+#}
 
 include /etc/sway/config.d/*

@@ -1,10 +1,10 @@
 #!/bin/sh
 
 if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
-    eval "$(dbus-launch --sh-syntax)"
-    export DBUS_SESSION_BUS_ADDRESS
+  eval "$(dbus-launch --sh-syntax)"
+  export DBUS_SESSION_BUS_ADDRESS
 fi
 
 pipewire &
-#wireplumber &
+wireplumber &
 pipewire-pulse &
