@@ -26,6 +26,8 @@ set $term foot
 #set $menu dmenu_run
 set $menu wofi --show drun --prompt "Search..." --width 40% --height 40% --location center
 set $browser librewolf
+set $music_player ytm
+set $resource_app btop
 
 ### Output configuration
 #
@@ -215,47 +217,38 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
-#
-# Utilities:
-#
-    # Special keys to adjust volume via PulseAudio
-    bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
-    bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
-    bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume \@DEFAULT_SINK@ +5%
-    bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle
-    # Special keys to adjust brightness via brightnessctl
-    bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
-    bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
-    # Special key to take a screenshot with grim
-    bindsym Print exec grim ~/Images/$(date +%Y-%m-%d_%H%M%S).png
-    bindsym Shift+Print exec grim -g "$(slurp)" ~/Images/$(date +%Y-%m-%d_%H%M%S).png
-    bindsym $mod+Print exec grim -g "$(slurp)" - | wl-copy 
-    
+
+
+# Special keys to adjust brightness via brightnessctl
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
+
+# Special key to take a screenshot with grim
+bindsym Print exec grim ~/Images/$(date +%Y-%m-%d_%H%M%S).png
+bindsym Shift+Print exec grim -g "$(slurp)" ~/Images/$(date +%Y-%m-%d_%H%M%S).png
+bindsym $mod+Print exec grim -g "$(slurp)" - | wl-copy 
+ 
+# sound
+bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
+bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
+bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume \@DEFAULT_SINK@ +5%
+bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+for_window [app_id="music-player"] floating enable, move scratchpad, resize set width 900 px height 600 px 
+bindsym $mod+m exec pgrep -f $music_player > /dev/null && swaymsg '[app_id="music-player"] scratchpad show' || $term --app-id="music-player" $music_player
+
+for_window [app_id="resource-app"] floating enable, move scratchpad, resize set width 900 px height 600 px 
+bindsym $mod+question exec pgrep -f $resource_app > /dev/null && swaymsg '[app_id="resource-app"] scratchpad show' || $term --app-id="resource-app" $resource_app
 #
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
 exec waybar
-#bar {
-#    position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-#    status_command while date +'%Y-%m-%d %X'; do sleep 1; done
-
-#    colors {
-#        statusline #ffffff
-#        background #323232
-#        inactive_workspace #32323200 #32323200 #5c5c5c
-#    }
-#}
 seat * {
     hide_cursor 3000
 }
-
-#exec_always {
-#    export GTK_THEME=Adwaita
-#    export XCURSOR_THEME=Adwaita
-#}
 
 include /etc/sway/config.d/*
