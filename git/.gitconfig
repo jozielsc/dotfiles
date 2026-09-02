@@ -1,0 +1,25 @@
+[core]
+	pager = delta --paging=always
+
+[color]
+	ui = always
+
+[delta]
+	navigate = true
+	side-by-side = false
+	line-numbers = true
+	syntax-theme = Dracula
+	features = decorations
+	file-style = bold yellow
+	hunk-header-style = file line-number syntax
+	plus-style = "syntax #025824"
+	minus-style = "syntax #740001"
+	whitespace-error-style = 22 reverse
+	inline-hunk-style = syntax
+	commit-decoration-style = bold yellow
+	commit-style = raw
+	zero-style = dim
+	blame-palette = "rgb(180,180,180)"
+
+[interactive]
+	diffFilter = delta --color-only
