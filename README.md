@@ -127,12 +127,3 @@ Se já existirem arquivos no destino (ex: `~/.zshrc`), o `stow` irá acusar conf
 
 ---
 
-## 🔒 Uso pessoal
-
-Este repositório é **de uso pessoal** e reflete minhas preferências de ambiente e fluxo de trabalho.
-
----
-
-## 📜 Licença
-
-Uso pessoal. Sem garantias.
