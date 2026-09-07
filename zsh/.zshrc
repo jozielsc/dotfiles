@@ -151,6 +151,11 @@ export EDITOR=nvim
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh 
 
+# Carrega scripts customizados da pasta de funções
+for file in ~/.config/zsh/functions/*.zsh; do
+  [ -f "$file" ] && source "$file"
+done
+
 if [[ -n "$SSH_CONNECTION" && -z "$TMUX" ]]; then
     tmux attach || tmux new 
 fi
