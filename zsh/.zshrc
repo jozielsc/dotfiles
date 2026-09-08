@@ -168,6 +168,10 @@ if [ -f ~/.bash_environment ]; then
     . ~/.bash_environment
 fi
 
+if command -v go &>/dev/null; then
+    export PATH="$PATH:$(go env GOPATH)/bin"
+fi
+
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.local/npm/bin:$PATH"
 source "$HOME/.config/broot/launcher/bash/br"
