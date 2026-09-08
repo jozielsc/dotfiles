@@ -7,36 +7,38 @@ git() {
       if command -v gh >/dev/null 2>&1; then
         echo ""
         echo -e "\033[1;34m[CI/CD]\033[0m Repositório com GitHub Actions detectado."
-        echo -e "\033[1;34m[CI/CD]\033[0m Aguardando registro da execução no GitHub..."
-
-        local current_branch=$(command git rev-parse --abbrev-ref HEAD 2>/dev/null)
+        
+        # Pega o HASH exato do commit atual
+        local current_sha=$(command git rev-parse HEAD 2>/dev/null)
         local run_id=""
 
-        # Tenta obter o ID da nova build por até 10 segundos
-        for i in {1..5}; do
+        echo -e "\033[1;34m[CI/CD]\033[0m Aguardando o GitHub registrar a build do commit ${current_sha:0:7}..."
+
+        # Tenta localizar a build do commit específico por até 15 segundos
+        for i in {1..10}; do
           sleep 2
-          run_id=$(gh run list --branch "$current_branch" --limit 1 --json databaseId -q '.[0].databaseId' 2>/dev/null)
+          run_id=$(gh run list --limit 10 --json databaseId,headSha -q ".[] | select(.headSha == \"$current_sha\") | .databaseId" 2>/dev/null | head -n 1)
           [[ -n "$run_id" ]] && break
         done
 
         if [[ -n "$run_id" ]]; then
-          # Acompanha em tempo real se ainda estiver executando
-          gh run watch "$run_id" >/dev/null 2>&1
+          echo -e "\033[1;32m[CI/CD]\033[0m Workflow iniciado (ID: $run_id). Acompanhando em tempo real:\n"
 
-          # Exibe o detalhamento de todos os passos (Jobs e Steps)
+          # 1. Acompanhamento AO VIVO no terminal (sem redirecionar para null)
+          gh run watch "$run_id"
+
+          # 2. Exibe o detalhamento completo dos passos ao finalizar
           echo ""
-          echo -e "\033[1;36m[CI/CD] Detalhamento dos passos:\033[0m"
-          gh run view "$run_id"
+          echo -e "\033[1;36m[CI/CD] Detalhamento completo dos passos (Steps):\033[0m"
+          echo ""
 
-          # Se o workflow falhar, imprime o log do passo que deu erro automaticamente
-          local conclusion=$(gh run view "$run_id" --json conclusion -q '.conclusion' 2>/dev/null)
-          if [[ "$conclusion" == "failure" ]]; then
+          local job_ids=($(gh run view "$run_id" --json jobs -q '.jobs[].id' 2>/dev/null))
+          for job_id in "${job_ids[@]}"; do
+            gh run view --job="$job_id"
             echo ""
-            echo -e "\033[1;31m[CI/CD] Logs da falha:\033[0m"
-            gh run view "$run_id" --log-failed
-          fi
+          done
         else
-          echo -e "\033[1;33m[CI/CD]\033[0m Nenhuma execução iniciada para a branch '$current_branch'."
+          echo -e "\033[1;33m[CI/CD]\033[0m O GitHub Actions não iniciou um workflow para o commit ${current_sha:0:7}."
         fi
       fi
     fi
