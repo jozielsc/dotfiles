@@ -25,7 +25,7 @@ set $term foot
 #set $menu wmenu-run
 #set $menu dmenu_run
 set $menu wofi --show drun --prompt "Search..." --width 40% --height 40% --location center
-set $browser librewolf
+set $browser qutebrowser 
 set $music_player ytm
 set $resource_app btop
 
@@ -89,9 +89,10 @@ input "type:pointer" {
     # Start your launcher
     bindsym $mod+d exec $menu
 
-    bindsym $mod+Shift+b exec $browser
-    bindsym $mod+Shift+f exec $browser-firefox
+    #bindsym $mod+Shift+b exec $browser
+    #bindsym $mod+Shift+f exec $browser-firefox
 
+    bindsym $mod+Shift+b exec $browser 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
     # Despite the name, also works for non-floating windows.
