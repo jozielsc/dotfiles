@@ -1,3 +1,11 @@
+
+layout_uv() {
+    if [ -d ".venv" ]; then 
+      export VIRTUAL_ENV="$PWD/.venv"
+      PATH_add = "$VIRTUAL_ENV/bin"
+    fi
+}
+
 layout_claude() {
     local account="${1:?uso: layout_claude <conta>}"
     local config_dir="$HOME/.claude-accounts/$account"
