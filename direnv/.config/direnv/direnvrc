@@ -1,24 +1,14 @@
-layout_poetry() {
-  if ! command -v poetry >/dev/null; then
-    echo "poetry not found"
-    return 1
-  fi
+layout_claude() {
+    local account="${1:?uso: layout_claude <conta>}"
+    local config_dir="$HOME/.claude-accounts/$account"
 
-  local venv
-  venv="$(poetry env info -p 2>/dev/null)"
-
-  if [ -z "$venv" ]; then
-    echo "No poetry virtualenv found"
-    return 1
-  fi
-
-  export VIRTUAL_ENV="$venv"
-  PATH_add "$VIRTUAL_ENV/bin"
-}
-
-layout_uv() {
-    if [ -d ".venv" ]; then 
-      export VIRTUAL_ENV="$PWD/.venv"
-      PATH_add = "$VIRTUAL_ENV/bin"
+    if [[ ! -d "$config_dir" ]]; then
+        log_status "conta '$account' não encontrada; criando diretório em $config_dir"
+        mkdir -p "$config_dir"
     fi
-  }
+
+    log_status "usando a conta $account"
+
+    export CLAUDE_ACCOUNT="$account"
+    export CLAUDE_CONFIG_DIR="$config_dir"
+}
