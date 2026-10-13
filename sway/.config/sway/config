@@ -28,6 +28,7 @@ set $menu wofi --show drun --prompt "Search..." --width 40% --height 40% --locat
 set $browser qutebrowser 
 set $music_player ytm
 set $resource_app btop
+set $tailscale_app $HOME/go/bin/tuiscale
 
 ### Output configuration
 #
@@ -238,11 +239,14 @@ bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-for_window [app_id="music-player"] floating enable, move scratchpad, resize set width 900 px height 600 px 
+for_window [app_id="music-player"] floating enable, move scratchpad, resize set width 900 px height 600 px, move position center 
 bindsym $mod+m exec pgrep -f $music_player > /dev/null && swaymsg '[app_id="music-player"] scratchpad show' || $term --app-id="music-player" $music_player
 
-for_window [app_id="resource-app"] floating enable, move scratchpad, resize set width 900 px height 600 px 
+for_window [app_id="resource-app"] floating enable, move scratchpad, resize set width 900 px height 600 px, move position center 
 bindsym $mod+question exec pgrep -f $resource_app > /dev/null && swaymsg '[app_id="resource-app"] scratchpad show' || $term --app-id="resource-app" $resource_app
+
+for_window [app_id="tailscale-app"] floating enable, move scratchpad, resize set width 900 px height 600 px, move position center 
+bindsym $mod+Shift+t exec pgrep -f $tailscale_app > /dev/null && swaymsg '[app_id="tailscale-app"] scratchpad show' || $term --app-id="tailscale-app" $tailscale_app
 #
 # Status Bar:
 #
